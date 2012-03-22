@@ -23,15 +23,15 @@
  * @returns {string} html解码后的字符串
  */
 baidu.string.decodeHTML = function (source) {
-    var str = String(source)
+    //处理转义的中文和实体字符
+    var str = source.replace(/&#([\d]+);/g, function(_0, _1) {
+        return String.fromCharCode(parseInt(_1, 10));
+    });
+    return String(str)
                 .replace(/&quot;/g,'"')
                 .replace(/&lt;/g,'<')
                 .replace(/&gt;/g,'>')
                 .replace(/&amp;/g, "&");
-    //处理转义的中文和实体字符
-    return str.replace(/&#([\d]+);/g, function(_0, _1){
-        return String.fromCharCode(parseInt(_1, 10));
-    });
 };
 
 baidu.decodeHTML = baidu.string.decodeHTML;
